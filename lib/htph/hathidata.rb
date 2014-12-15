@@ -32,10 +32,14 @@ module HTPH::Hathidata
   # HTPH::Hathidata.read('foo') do |line|
   #   puts line; # --> prints "hello\nadieu\n"
   # end
+  # Break the loop with:
+  #   throw :break;
   def self.read(path)
     hd = Data.new(path).open('r');
-    hd.file.each_line do |line|
-      yield line;
+    catch :break do
+      hd.file.each_line do |line|
+        yield line;
+      end
     end
   ensure
     hd.close();
@@ -78,6 +82,9 @@ module HTPH::Hathidata
     def open(p_attr = 'r')
       @@log.d("Open #{@path} as #{p_attr}");
       if !@path.exist? then
+        if p_attr == 'r' then
+          raise "Cannot open #{@path} for reading, path does not exist.";
+        end
         @path.descend do |v|
           if !v.exist? && v != @path then
             # We need to make #{v}
@@ -153,7 +160,7 @@ module HTPH::Hathidata
       self;
     end
 
-    # Compress, zip.
+    # Compress, gzip.
     # Deletes the original.
     # Switches @path after deflate.
     def deflate
@@ -172,7 +179,7 @@ module HTPH::Hathidata
       self;
     end
 
-    # Decompress, unzip.
+    # Decompress, gunzip.
     # Deletes the original.
     # Switches @path after inflate.
     def inflate
