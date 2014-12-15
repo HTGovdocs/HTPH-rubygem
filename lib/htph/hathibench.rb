@@ -16,11 +16,11 @@
 
 module HTPH::Hathibench
   class Benchmark
-    def initialize ()
+    def initialize
       # Hash of Profile objects, keyed on their label.
       @profiles = {};
     end
-    def time (label = caller(1)[0].split(':')[0,2].join(':')) 
+    def time (label = caller(1)[0].split(':')[0,2].join(':'))
       # ^^ If no label given, use caller path + lineno. ^^
       @profiles[label] ||= Profile.new(label);
       ts = Time.new();
@@ -29,7 +29,7 @@ module HTPH::Hathibench
       # get duration as epoch-in-seconds.milliseconds
       duration = te.strftime("%s.%L").to_f - ts.strftime("%s.%L").to_f;
       @profiles[label].update(duration);
-    end    
+    end
     def prettyprint
       self.to_s; # Just an alias.
     end
@@ -43,7 +43,7 @@ module HTPH::Hathibench
   end
 
   # Benchmarking profile for a particular label.
-  class Profile    
+  class Profile
     def initialize (label)
       @label = label;
       @time  = 0.0;
@@ -59,7 +59,7 @@ module HTPH::Hathibench
     end
     def to_s
       avg = 0;
-      if @calls > 0 then 
+      if @calls > 0 then
         avg = @time / @calls;
       end
       return [@label, @time, @calls, @max, @min, avg].join("\t");
