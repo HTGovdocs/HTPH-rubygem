@@ -41,7 +41,7 @@ module HTPH::Hathijdbc
       if @prep_cache.has_key?(sql) then
         pstatement = @prep_cache[sql];
       else
-        pstatement = @conn.prepare_statement(sql);  
+        pstatement = @conn.prepare_statement(sql);
         @prep_cache[sql] = pstatement;
       end
 
@@ -54,10 +54,14 @@ module HTPH::Hathijdbc
         j = i+1; # This index starts with 1.
         if e.class.ancestors.include?(Integer) then
           pstatement.set_long(j, e);
+        elsif e.class == Java::JavaMath::BigDecimal then
+          pstatement.set_big_decimal(j, e);
         elsif e.class == Float then
           pstatement.set_float(j, e);
         elsif e.class == String then
           pstatement.set_string(j, e);
+        else
+          raise "Don't know what to set #{e} (#{e.class}) as";
         end
       end
 
@@ -75,7 +79,7 @@ module HTPH::Hathijdbc
         rs = pstatement.getResultSet();
         while (rs.next) do
           yield rs;
-        end    
+        end
       else
         yield nil;
       end
@@ -94,8 +98,8 @@ module HTPH::Hathijdbc
     # simple_select("select 1 as c") do |row|
     #   puts row.get_object('c');
     # end
-    def simple_select (sql) 
-      # Java::ComMysqlJdbc::StatementImpl, 
+    def simple_select (sql)
+      # Java::ComMysqlJdbc::StatementImpl,
       # http://www.docjar.com/docs/api/com/mysql/jdbc/StatementImpl.html
       statement = @conn.create_statement();
       # Java::ComMysqlJdbc::JDBC4ResultSet
