@@ -1,6 +1,10 @@
 # Htph
 
-TODO: Write a gem description
+Pronunciation: See Bill the Cat of Opus fame.
+
+This is a collection of convenience classes I've used in the HathiTrust Print Holdings (original source of acronym)
+and later in the HathiTrust Government Document Repository project. There really isn't anything special with them, and
+they may contain several re-inventions of the wheel.
 
 ## Installation
 
@@ -18,7 +22,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In your project Gemfile, put:
+
+    gem 'htph', :path => '/absolute/path/to/root/of/htph/'
+
+Add to you bundle in the root of your project dir:
+
+    cd /root/of/your/project/dir;
+    bundle install --path .bundle
+
+Then, in your code:
+
+    require 'htph';
+    hd = HTPH::Hathidata::Data.new('foo').open('r');
+    ...
 
 ## Contributing
 
