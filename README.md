@@ -1,6 +1,6 @@
 # Htph
 
-Pronunciation: See Bill the Cat of Opus fame.
+Pronunciation: See Bill the Cat of Opus fame. (https://www.google.com/search?tbm=isch&q=bill+the+cat+thbbft)
 
 This is a collection of convenience classes I've used in the HathiTrust Print Holdings (original source of acronym)
 and later in the HathiTrust Government Document Repository project. There really isn't anything special with them, and
