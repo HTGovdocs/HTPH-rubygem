@@ -6,6 +6,25 @@ This is a collection of convenience classes I've used in the HathiTrust Print Ho
 and later in the HathiTrust Government Document Repository project. There really isn't anything special with them, and
 they may contain several re-inventions of the wheel.
 
+They are:
+
+* hathibench.rb
+    * Simple benchmarking tool
+* hathiconf.rb
+    * Reads configuration from .env  
+* hathidata.rb
+    * Reads and writes to files in /data/
+* hathidb.rb
+    * Provides connection to mysql based on configs in .env 
+* hathienv.rb
+    * Tells you if you are in dev or prod.
+* hathijdbc.rb
+    * Similar to hathidb but does it without jdbc-helper
+* hathilog.rb
+    * Write to logfiles in /log/
+* hathinormalize.rb
+    * Contains some common normalization rules 
+
 ## Installation
 
 Add this line to your application's Gemfile:
