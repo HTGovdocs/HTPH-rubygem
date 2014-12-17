@@ -1,4 +1,8 @@
 =begin
+
+Based on dev_host and/or prod_host in .env, figure out if you are
+in dev or prod.
+
 Example:
 
 require 'htph/hathienv';
