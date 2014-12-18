@@ -7,6 +7,35 @@ Open and close, inflate and deflate, all as long as you keep track
 of where they are inside the data directory, outside which this
 module should not dare wander.
 
+Data directory is read by HTPH::Hathiconf from the .env file.
+
+Examples:
+
+# Write to file:
+  hdout = HTPH::Hathidata::Data.new('foo.tmp').open('w');
+  hdout.file.puts "Hellow orld.";
+  hdout.close();
+
+OR
+
+  HTPH::Hathidata.write('foo.tmp') do |hdout|
+    hdout.file.puts "Hellow orld.";
+  end
+
+# Read from file:
+  hdin = HTPH::Hathidata::Data.new('foo.tmp').open('r');
+  hdin.file.lines.each do |line|
+    puts line;
+  end
+
+OR
+
+  HTPH::Hathidata.read('foo.tmp') do |line|
+    puts line;
+  end
+
+You can also .delete(), .inflate(), .deflate() a HTPH::Hathidata::Data.
+
 =end
 
 require 'pathname';
@@ -17,11 +46,6 @@ require 'htph/hathiconf';
 module HTPH::Hathidata
 
   # More in tune with the ruby way, hiding the open and close.
-  
-  # HTPH::Hathidata.write('foo') do |x|
-  #   x.file.puts 'hello';
-  #   x.file.puts 'adieu';
-  # end
   def self.write(path, mode = 'w', &block)
     hd = Data.new(path).open(mode);
     hd.instance_eval(&block);
@@ -29,10 +53,7 @@ module HTPH::Hathidata
     hd.close();
   end
 
-  # HTPH::Hathidata.read('foo') do |line|
-  #   puts line; # --> prints "hello\nadieu\n"
-  # end
-  # Break the loop with:
+  # Break the read-loop with:
   #   throw :break;
   def self.read(path)
     hd = Data.new(path).open('r');
@@ -55,8 +76,9 @@ module HTPH::Hathidata
     attr_reader :data_dir_path;
 
     def initialize(p_path)
-      # Make sure data dir path is set in .env, and set to
-      # a readable and writable path.      
+      # Takes a file name or path relative to data_dir_path.
+      # Make sure data_dir_path is set in .env, and is a readable
+      # and writable path.
       @data_dir_path = Pathname.new(@@conf.get!('data_dir_path', "Please set in your .env"));
       if !File.readable?(@data_dir_path) then
         raise "HTPH::Hathidata::Data::@data_dir_path #{@data_dir_path} must be readable";
@@ -64,10 +86,11 @@ module HTPH::Hathidata
       if !File.writable?(@data_dir_path) then
         raise "HTPH::Hathidata::Data::@data_dir_path #{@data_dir_path} must be writable";
       end
-      
-      # Make it possible to easily date filenames.
-      # Inlude $ymd and get it replaced with yyyymmdd.
-      # Works on both filenames and dirs
+
+      # Make it possible to easily date filenames:
+      # Inlude $ymd and get it replaced with strftime("%Y%m%d").
+      # Works on both filenames and dirs.
+      # Like so: HTPH::Hathidata::Data("today_is_$ymd.txt").open('w');
       if p_path[/\$ymd/] then
         ymd = Time.new().strftime("%Y%m%d");
         p_path.gsub!(/\$ymd/, ymd);

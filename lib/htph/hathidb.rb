@@ -4,6 +4,19 @@ require 'io/console';
 require 'htph/hathiconf';
 require 'htph/hathienv';
 
+=begin
+
+Provides connection(s) to the mysql database(s) mentioned in .env.
+Uses HTPH::Hathiconf::Conf to read .env.
+
+You can only access the prod db if calling from the prod environment,
+as defined by HTPH::Hathienv.
+
+If you want to enter username and password interactively, use the
+_interactive methods.
+
+=end
+
 module HTPH::Hathidb
   class Db
 

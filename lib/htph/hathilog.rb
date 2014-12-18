@@ -9,7 +9,7 @@ lg.d("d does debug");
 ...
 lg.f("f for fatal");
 
-lg.set_level(2); # Will now ignore debug. 
+lg.set_level(2); # Will now ignore debug.
 
 # File logger to LOG_DIR_PATH/foo.log.
 lg = HTPH::Hathilog::Log.new({:file_name => 'foo.log'});
@@ -72,7 +72,7 @@ module HTPH::Hathilog
 
         STDERR.puts "Logging to #{@file_path}";
         f = File.open(@file_path, File::WRONLY | File::APPEND | File::CREAT)
-        
+
         if parameters.has_key?(:sync) then
           if parameters[:sync].class == true.class || parameters[:sync].class == false.class then
             f.sync = parameters[:sync];

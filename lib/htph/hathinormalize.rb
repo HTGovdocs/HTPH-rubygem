@@ -47,15 +47,15 @@ module HTPH::Hathinormalize
     e.gsub!(/\*/, "");
     # e.gsub!(/ \-/, "-");
     e.strip!;
-    
+
     return e;
   end
 
   def self.title (t)
-    t.gsub!(/[^A-Z0-9]+/, ' ');      
-    t.gsub!(/ +/, ' '); # whitespace 
-    t.sub!(/^ /,  '');               
-    t.sub!(/ $/,  '');               
-    return t;                        
+    t.gsub!(/[^A-Z0-9]+/, ' ');
+    t.gsub!(/ +/, ' '); # whitespace
+    t.sub!(/^ /,  '');
+    t.sub!(/ $/,  '');
+    return t;
   end
 end

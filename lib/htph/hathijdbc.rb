@@ -3,6 +3,29 @@ require 'io/console';
 require 'htph/hathiconf';
 require 'htph/hathienv';
 
+=begin
+
+When you can't, for some reason, use HTPH::Hathidb, e.g. when
+you are in Sinatra-land, you can use this for database connections.
+Does not use JDBC-Helper.
+
+Example:
+
+db      = HTPH::Hathijdbc::Jdbc.new();
+conn    = db.get_conn();
+sel_sql = "SELECT x FROM table_y WHERE z = ? AND q = ?";
+conn.prepared_select(sel_sql, ['aa', 'bb']) do |row|
+  puts row.get_object('x');
+end
+
+upd_sql = "UPDATE table_y SET z = ? WHERE z = ?";
+success = conn.prepared_update(upd_q, [new_val, old_val]);
+
+N.B.: prepared_update can do UPDATE, INSERT, DELETE,
+LOAD DATA LOCAL INFILE ...
+
+=end
+
 module HTPH::Hathijdbc
   class Jdbc
 
