@@ -29,28 +29,13 @@ They are:
 
 Add this line to your application's Gemfile:
 
-    gem 'htph'
+    gem 'htph', :git => 'https://github.com/HTGovdocs/HTPH-rubygem.git';
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install htph
+    $ bundle install --path .bundle/
 
 ## Usage
-
-In your project Gemfile, put:
-
-    gem 'htph', :path => '/absolute/path/to/root/of/htph/'
-
-Add to you bundle in the root of your project dir:
-
-    cd /root/of/your/project/dir;
-    bundle install --path .bundle
-
-Then, in your code:
 
     require 'htph';
     hd = HTPH::Hathidata::Data.new('foo').open('r');
