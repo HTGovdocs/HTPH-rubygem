@@ -52,6 +52,7 @@ module HTPH::Hathinormalize
   end
 
   def self.title (t)
+    t.upcase!;
     t.gsub!(/[^A-Z0-9]+/, ' ');
     t.gsub!(/ +/, ' '); # whitespace
     t.sub!(/^ /,  '');
