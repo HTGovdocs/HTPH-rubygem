@@ -59,4 +59,11 @@ module HTPH::Hathinormalize
     t.sub!(/ $/,  '');
     return t;
   end
+
+  def self.oclc (o)
+    # an oclc is only \d+ and has no leading zeroes.
+    o.gsub!(/\D/, '');
+    o.gsub!(/^0+/, '');
+    return o;
+  end
 end
