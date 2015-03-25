@@ -68,12 +68,10 @@ module HTPH::Hathinormalize
   end
 
   def self.sudoc (s)
-    s.gsub!(/ +/, ' '); # whitespace
-    s.sub!(/^ /,  '');
-    s.sub!(/ $/,  '');
+    s.gsub!(/ +/, ''); # NO whitespace
+    s.upcase!;
     s.sub!(/SUDOCS?/,  '');
     s.gsub!(/[\(\)\{\}\[\]]/, ''); # Brackets    
-    s.upcase!;
     s.gsub!(/[A-Z0-9-]+$/, '');    # No non-alphas other than '-' allowed at the end.
   end 
 end
