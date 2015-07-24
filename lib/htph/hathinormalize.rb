@@ -72,6 +72,6 @@ module HTPH::Hathinormalize
     s.upcase!;
     s.sub!(/SUDOCS?/,  '');
     s.gsub!(/[\(\)\{\}\[\]]/, ''); # Brackets    
-    s.gsub!(/[A-Z0-9-]+$/, '');    # No non-alphas other than '-' allowed at the end.
+    s.gsub!(/[^A-Z0-9-]+$/, '');    # No non-alphas other than '-' allowed at the end.
   end 
 end
