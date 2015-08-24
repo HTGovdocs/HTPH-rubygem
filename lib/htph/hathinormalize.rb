@@ -36,7 +36,7 @@ module HTPH::Hathinormalize
     e.gsub!(/ +/, " ");
 
     # Deal with copies
-    e.gsub!(/(C|COPY?)[ .]*\d+/, "");
+    e.gsub!(/\b(C|COPY?)[ .]*\d+/, "");
     e.gsub!(/(\d+(ST|ND|RD|TH)|ANOTHER) COPY/, "");
 
     e.gsub!(/VOL(UME)?/, "V");
