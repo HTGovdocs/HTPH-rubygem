@@ -1,4 +1,7 @@
 module HTPH::Hathinormalize
+
+  @@month_rx = Regexp.new(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/);
+
   def self.agency (ag)
     ag.upcase!;
     ag.gsub!(/[,\.:;]|\'S?/, '');   # punctuations
@@ -75,4 +78,30 @@ module HTPH::Hathinormalize
     s.gsub!(/[^A-Z0-9-]+$/, '');    # No non-alphas other than '-' allowed at the end.
     return s;
   end 
+
+  def self.pubdate (p)
+    p.strip!                                                 
+    p.upcase!                                                
+
+    c = 0;
+    while p =~ @@month_rx do                                   
+      month = $1;                                               
+      p.sub!(/#{month}[^ ]*/, month.downcase);               
+      c += 1;
+      raise "Stuck in loop" if c > 100;
+    end                                                         
+    
+    p.gsub!(/BETWEEN(.+?)(?:AND|TO)(.+)/, '\1' + '-' + '\2');
+    p.gsub!(/\s(TO|NOT AFTER)\s/, '-');                      
+    
+    p.gsub!(/[^a-z0-9\-]+/, " ");                            
+    p.gsub!(/ +/, " ");                                      
+    p.sub!(/^ +/, "");                                       
+    p.sub!(/ +$/, "");                                       
+    p.gsub!(/\s*-\s*/, '-');                                 
+    p.upcase!                                                
+
+    return p;
+  end
+
 end
