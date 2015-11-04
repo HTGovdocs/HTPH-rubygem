@@ -43,7 +43,7 @@ module HTPH::Hathinormalize
     e.gsub!(/(\d+(ST|ND|RD|TH)|ANOTHER) COPY/, "");
 
     e.gsub!(/VOL(UME)?/, "V");
-    e.gsub!(/[\(\)\[\]\*]/, "");
+    # e.gsub!(/[\(\)\[\]\*]/, ""); # Commented out for enumchron parsing purposes, parens are important there. 
     e.gsub!(/SUPP?(L(EMENT)?)?S?/, "SUP");
     e.gsub!(/&/, " AND ");
     e.gsub!(/\.(\S)/, ". \\1");
