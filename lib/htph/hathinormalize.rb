@@ -43,7 +43,7 @@ module HTPH::Hathinormalize
     e.gsub!(/(\d+(ST|ND|RD|TH)|ANOTHER) COPY/, "");
 
     e.gsub!(/VOL(UME)?/, "V");
-    # e.gsub!(/[\(\)\[\]\*]/, ""); # Commented out for enumchron parsing purposes, parens are important there. 
+    # e.gsub!(/[\(\)\[\]\*]/, ""); # Commented out for enumchron parsing purposes, parens are important there.
     e.gsub!(/SUPP?(L(EMENT)?)?S?/, "SUP");
     e.gsub!(/&/, " AND ");
     e.gsub!(/\.(\S)/, ". \\1");
@@ -74,34 +74,65 @@ module HTPH::Hathinormalize
     s.gsub!(/ +/, ''); # NO whitespace
     s.upcase!;
     s.sub!(/SUDOCS?/,  '');
-    s.gsub!(/[\(\)\{\}\[\]]/, ''); # Brackets    
+    s.gsub!(/[\(\)\{\}\[\]]/, ''); # Brackets
     s.gsub!(/[^A-Z0-9-]+$/, '');    # No non-alphas other than '-' allowed at the end.
     return s;
-  end 
+  end
 
   def self.pubdate (p)
-    p.strip!                                                 
-    p.upcase!                                                
+    p.strip!
+    p.upcase!
 
     c = 0;
-    while p =~ @@month_rx do                                   
-      month = $1;                                               
-      p.sub!(/#{month}[^ ]*/, month.downcase);               
+    while p =~ @@month_rx do
+      month = $1;
+      p.sub!(/#{month}[^ ]*/, month.downcase);
       c += 1;
       raise "Stuck in loop" if c > 100;
-    end                                                         
-    
+    end
+
     p.gsub!(/BETWEEN(.+?)(?:AND|TO)(.+)/, '\1' + '-' + '\2');
-    p.gsub!(/\s(TO|NOT AFTER)\s/, '-');                      
-    
-    p.gsub!(/[^a-z0-9\-]+/, " ");                            
-    p.gsub!(/ +/, " ");                                      
-    p.sub!(/^ +/, "");                                       
-    p.sub!(/ +$/, "");                                       
-    p.gsub!(/\s*-\s*/, '-');                                 
-    p.upcase!                                                
+    p.gsub!(/\s(TO|NOT AFTER)\s/, '-');
+
+    p.gsub!(/[^a-z0-9\-]+/, " ");
+    p.gsub!(/ +/, " ");
+    p.sub!(/^ +/, "");
+    p.sub!(/ +$/, "");
+    p.gsub!(/\s*-\s*/, '-');
+    p.upcase!
 
     return p;
   end
+end
 
+# Call e.g. 
+# bundle exec ruby lib/htph/hathinormalize.rb test enumc
+# to REPL-test the enumc method.
+if $0 == __FILE__ then
+  command = ARGV.shift;
+  if command == 'test' then
+    method = ARGV.shift;
+    while true do
+      print "#{method} >>> ";
+      input  = gets.strip;
+      output = '';
+      case method
+      when 'agency'
+        output = HTPH::Hathinormalize.agency(input);
+      when 'enumc'
+        output = HTPH::Hathinormalize.enumc(input);
+      when 'oclc'
+        output = HTPH::Hathinormalize.oclc(input);
+      when 'pubdate'
+        output = HTPH::Hathinormalize.pubdate(input);
+      when 'sudoc'
+        output = HTPH::Hathinormalize.sudoc(input);
+      when 'title'
+        output = HTPH::Hathinormalize.title(input);
+      else
+        exit;
+      end
+      puts output;
+    end
+  end
 end
