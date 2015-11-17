@@ -10,7 +10,7 @@ Uses HTPH::Hathiconf::Conf to read .env.
 
 module HTPH::Hathimongo
   class Db
-
+    attr_reader :conn;
     def initialize ()
       conf = HTPH::Hathiconf::Conf.new();
       host = conf.get('dev_mongo_host');
