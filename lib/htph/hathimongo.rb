@@ -17,7 +17,7 @@ module HTPH::Hathimongo
       port = conf.get('dev_mongo_port');
       name = conf.get('dev_mongo_name');
 
-      if [host,port,name].include?(nil) then
+      if [host,port,name].include?('') then
         raise "Missing one or more mongo settings in .env!";
       end
 
