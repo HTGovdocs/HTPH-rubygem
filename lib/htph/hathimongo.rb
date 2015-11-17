@@ -15,13 +15,13 @@ module HTPH::Hathimongo
       conf = HTPH::Hathiconf::Conf.new();
       host = conf.get('dev_mongo_host');
       port = conf.get('dev_mongo_port');
-      db   = conf.get('dev_mongo_db');
+      name = conf.get('dev_mongo_name');
 
       if [host,port,db].include?(nil) then
         raise "Missing one or more mongo settings in .env!";
       end
 
-      conn = Mongo::Client.new("#{host}:#{port}", :database => db);
+      conn = Mongo::Client.new("#{host}:#{port}", :database => name);
       return conn;
     end
   end
