@@ -21,7 +21,7 @@ module HTPH::Hathimongo
         raise "Missing one or more mongo settings in .env!";
       end
 
-      conn = Mongo::Client.new("#{host}:#{port}", :database => name);
+      conn = Mongo::Client.new(["#{host}:#{port}"], :database => name);
       return conn;
     end
   end
