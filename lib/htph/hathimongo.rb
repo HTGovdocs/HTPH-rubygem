@@ -9,7 +9,7 @@ Uses HTPH::Hathiconf::Conf to read .env.
 =end
 
 module HTPH::Hathimongo
-  class Mongo
+  class Db
 
     def initialize ()
       conf = HTPH::Hathiconf::Conf.new();
