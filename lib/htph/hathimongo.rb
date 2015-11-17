@@ -22,7 +22,6 @@ module HTPH::Hathimongo
       end
 
       @conn = Mongo::Client.new(["#{host}:#{port}"], :database => name);
-      return @conn;
     end
   end
 end
