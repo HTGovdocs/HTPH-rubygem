@@ -23,4 +23,5 @@ require 'htph/hathidb';
 require 'htph/hathienv';
 require 'htph/hathijdbc';
 require 'htph/hathilog';
+require 'htph/hathimongo';
 require 'htph/hathinormalize';
