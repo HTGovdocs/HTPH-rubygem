@@ -3,8 +3,25 @@ require 'htph/hathiconf';
 
 =begin
 
+## Description
+
 Provides connection(s) to the mongodb mentioned in .env.
 Uses HTPH::Hathiconf::Conf to read .env.
+
+## Requires the following settings in .env:
+
+dev_mongo_host = x
+dev_mongo_port = y
+dev_mongo_name = z
+
+## Example usage:
+
+require 'htph';
+mongo  = HTPH::Hathimongo::Db.new();
+cursor = mongo.conn[:collection].find(...);
+cursor.each do |doc|
+   puts doc;
+end
 
 =end
 
