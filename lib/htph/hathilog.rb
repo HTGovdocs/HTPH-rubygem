@@ -111,21 +111,28 @@ module HTPH::Hathilog
       end
     end
 
-    # Shorthand for the 5 main log levels.
-    def d(msg)
+    def debug(msg)
       @logger.debug(msg);
     end
-    def i(msg)
+    def info(msg)
       @logger.info(msg);
     end
-    def w(msg)
+    def warn(msg)
       @logger.warn(msg);
     end
-    def e(msg)
+    def error(msg)
       @logger.error(msg);
     end
-    def f(msg)
+    def fatal(msg)
       @logger.fatal(msg);
     end
+
+    # Shorthand aliases
+    alias_method :d, :debug;
+    alias_method :i, :info;
+    alias_method :w, :warn;
+    alias_method :e, :error;
+    alias_method :f, :fatal;
+
   end
 end
