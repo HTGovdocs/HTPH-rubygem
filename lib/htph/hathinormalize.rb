@@ -60,6 +60,8 @@ module HTPH::Hathinormalize
     t.gsub!(/ +/, ' '); # whitespace
     t.sub!(/^ /,  '');
     t.sub!(/ $/,  '');
+    t.sub!(/\bU S\b/, "US");
+    t.sub!(/\bU S S R\b/, "USSR");
     return t;
   end
 
